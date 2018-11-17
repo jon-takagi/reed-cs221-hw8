@@ -31,7 +31,40 @@ double Cities::total_path_distance(const permutation_t& ordering) const
     return distance;
 }
 
+//adds the argument to the back of the city elements
+void Cities::add(coord_t new_coord) {
+    this -> city_elements_.push_back(new_coord);
+}
+
+//allows direct access to the elements
+//helper for <<
+std::vector<Cities::coord_t> Cities::get_elements() {
+    return this -> city_elements_;
+}
 int main()
 {
     return 0;
+}
+
+//reads from the input istream
+//while the stream is not done, make pairs of values
+//relies on in reading a whole number
+//as explained to me by robert
+std::istream& operator >> (std::istream& in, Cities& cities_ls){
+    while(in) {
+        Cities::coord_t pair;
+        in >> pair.first;
+        in >> pair.second;
+        cities_ls.add(pair);
+    }
+    return in;
+}
+
+//writes tab separated list
+//each pair in the elements is written on a newline as tab separated values
+std::ostream& operator << (std::ostream& os, Cities& cities_ls){
+    for(Cities::coord_t elm: cities_ls.get_elements()){
+        os << elm.first << "\t" << elm.second << "\n";
+    }
+    return os;
 }
