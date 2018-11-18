@@ -32,22 +32,11 @@ Cities Cities::reorder(const permutation_t& ordering) const
 Cities::permutation_t Cities::random_permutation(unsigned len)
 {
     //first create the ordered vector
-    permutation_t ordered_nums;
-    for (unsigned int i = 0; i < len; i++)
-    {
-        ordered_nums.push_back(i);
-    }
-    //now establish our RNG
-    std::default_random_engine generator;
     permutation_t permuted_nums;
-    for (int i = len; i > 0; i++)
-    {
-        std::uniform_int_distribution<unsigned int> distribution(0, len-1);
-        unsigned int holder =  ordered_nums.at(distribution(generator));
-        ordered_nums[distribution(generator)] = ordered_nums.at(ordered_nums.size() - 1);
-        ordered_nums.pop_back();
-        permuted_nums.push_back(holder);
+    for(int i = 0; i < len; i++) {
+        nums.push_back(i);
     }
+    std::random_shuffle(nums.front, nums.back); 
     return permuted_nums;
 }
 

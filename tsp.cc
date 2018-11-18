@@ -22,13 +22,14 @@ int main(int argc, char** argv) {
 
     for(int i = 0; i < iterations; i++) {
         order = city.random_permutation(number_of_cities);
-        city = city.reorder(order);
-        double dist = city.total_path_distance(order);
-        if(dist < best_distance) {
-            best_distance = dist;
-            best_city = city;
-            std::cout << i << "\t" << best_distance;
-        }
+        // city = city.reorder(order);
+        // double dist = city.total_path_distance(order);
+        // if(dist < best_distance) {
+        //     best_distance = dist;
+        //     best_city = city;
+        //     std::cout << i << "\t" << best_distance;
+        // }
+        best_distance --    ;
     }
 
     std::ofstream outstream("shortest.tsv");
