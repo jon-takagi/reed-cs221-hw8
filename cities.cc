@@ -41,10 +41,6 @@ void Cities::add(coord_t new_coord) {
 std::vector<Cities::coord_t> Cities::get_elements() {
     return this -> city_elements_;
 }
-int main()
-{
-    return 0;
-}
 
 //reads from the input istream
 //while the stream is not done, make pairs of values
