@@ -31,15 +31,6 @@ public:
     // distance on a plane between their coordinates.
     double total_path_distance(const permutation_t& ordering) const;
 
-    //allows access to private elements for input and output
-    //i think we should just make the operator methods friendly
-    //this is easier tho
-    std::vector<coord_t> get_elements();
-
-    //adds a coordinate to the list of cities
-    //helpful for reading in
-    void add(coord_t);
-
     friend std::istream& operator >> (std::istream& in, Cities& cities_ls);
     friend std::ostream& operator << (std::ostream& os, Cities& cities_ls);
 private:
