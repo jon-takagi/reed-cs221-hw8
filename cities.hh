@@ -37,7 +37,7 @@ public:
 
     //helper for tsp
     //number of cities in the list
-    int size();
+    int size() const;
 
     friend std::istream& operator >> (std::istream& in, Cities& cities_ls);
     friend std::ostream& operator << (std::ostream& os, Cities& cities_ls);

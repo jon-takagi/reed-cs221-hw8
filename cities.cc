@@ -14,13 +14,20 @@ Cities Cities::reorder(const permutation_t& ordering) const
 {
     auto permuted_cities = new Cities();
     std::vector<coord_t> permuted_elmts = {};//empty vector
+    //Copy in the reordered elements
     for (int i : ordering)
     {
         permuted_elmts.push_back(this->city_elements_.at(i));//Takes element i of original cities object and puts it in
     }
+    //Then copy any elements that weren't reordered
+    for (int i = permuted_elmts.size(); i < (this->size()); i++)
+    {
+        permuted_elmts.push_back(this->city_elements_.at(i-1));//since i is a size here, we need to scale it back to refer to the elements
+    }
     permuted_cities->city_elements_ = permuted_elmts;
     return *permuted_cities;
 }
+
 //Returns a random permutation of ints 0 to len-1
 //This is implemented by making an ordered vector of said ints
 //Then picking one of those ints at random, removing it from the
@@ -62,7 +69,7 @@ double Cities::total_path_distance(const permutation_t& ordering) const
     }
     return distance;
 }
-int Cities::size() {
+int Cities::size() const {
     return this -> city_elements_.size();
 }
 
