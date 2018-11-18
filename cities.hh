@@ -31,6 +31,10 @@ public:
     // distance on a plane between their coordinates.
     double total_path_distance(const permutation_t& ordering) const;
 
+    //helper for tsp
+    //number of cities in the list
+    int size();
+
     friend std::istream& operator >> (std::istream& in, Cities& cities_ls);
     friend std::ostream& operator << (std::ostream& os, Cities& cities_ls);
 private:

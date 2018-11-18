@@ -31,6 +31,10 @@ double Cities::total_path_distance(const permutation_t& ordering) const
     }
     return distance;
 }
+int Cities::size() {
+    return this -> city_elements_.size();
+}
+
 
 //reads from the input istream
 //while the stream is not done, make pairs of values
