@@ -1,11 +1,12 @@
 #include "cities.hh"
 #include <cmath>
 
-//returns the distance between twot city coord pairs
+//returns the distance between two city coord pairs
 double Cities::dist_between(coord_t city_a, coord_t city_b) const
 {
     return std::hypot(static_cast<double>(city_a.first-city_b.first), static_cast<double>(city_a.second-city_b.second));//Cast as doubles so hypot returns doubles
 }
+
 
 Cities Cities::reorder(const permutation_t& ordering) const
 {
@@ -31,17 +32,6 @@ double Cities::total_path_distance(const permutation_t& ordering) const
     return distance;
 }
 
-//adds the argument to the back of the city elements
-void Cities::add(coord_t new_coord) {
-    this -> city_elements_.push_back(new_coord);
-}
-
-//allows direct access to the elements
-//helper for <<
-std::vector<Cities::coord_t> Cities::get_elements() {
-    return this -> city_elements_;
-}
-
 //reads from the input istream
 //while the stream is not done, make pairs of values
 //relies on in reading a whole number
@@ -51,7 +41,7 @@ std::istream& operator >> (std::istream& in, Cities& cities_ls){
         Cities::coord_t pair;
         in >> pair.first;
         in >> pair.second;
-        cities_ls.add(pair);
+        cities_ls.city_elements_.push_back(pair);
     }
     return in;
 }
@@ -59,7 +49,7 @@ std::istream& operator >> (std::istream& in, Cities& cities_ls){
 //writes tab separated list
 //each pair in the elements is written on a newline as tab separated values
 std::ostream& operator << (std::ostream& os, Cities& cities_ls){
-    for(Cities::coord_t elm: cities_ls.get_elements()){
+    for(Cities::coord_t elm: cities_ls.city_elements_){
         os << elm.first << "\t" << elm.second << "\n";
     }
     return os;

@@ -7,7 +7,7 @@ all: test_class
 
 test_class: cities.o
 	$(CXX) $(LDFLAGS) -o $@ $^
-tsp: tsp.cc
+tsp: tsp.cc cities.cc
 	$(CXX) $(LDFLAGS) -o $@ $^
 
 %.o: %.cc %.hh

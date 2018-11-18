@@ -1,32 +1,38 @@
 #include <iostream>
 #include <fstream>
-#include "cities.cc"
+#include "cities.hh"
 int main(int argc, char** argv) {
-    int iterations = 1000000;
+    // int iterations = 1000000;
 
     if(argc != 2) {
         std::cerr << "Incorrect number of arguments" << "\n";
         exit(11);
     }
     std::ifstream fs(argv[1]);
-    // fs.open(argv[1]);
     Cities city({});
     fs >> city;
     fs.close();
 
-    Cities best_city({});
-    double best_distance = std::numeric_limits<double>::infinity();
-    for(int i = 0; i < iterations; i++) {
-        city.reorder();
-        double dist = city.total_path_distance();
-        if(dist < best_distance) {
-            best_distance = dist;
-            best_city = city;
-            std::cout << i << "\t" << best_distance;
-        }
-    }
+    std::cout << city;
+    // const int number_of_cities = city.get_elements().size();
+    //
+    // Cities best_city({});
+    // double best_distance = std::numeric_limits<double>::infinity();
+    // Cities::permutation_t order = Cities::random_permuation(number_of_cities);
+    // for(int i = 0; i < iterations; i++) {
+    //     order = Cities::random_permuation(number_of_cities);
+    //     city = city.reorder(order);
+    //     double dist = city.total_path_distance(order);
+    //     if(dist < best_distance) {
+    //         best_distance = dist;
+    //         best_city = city;
+    //         std::cout << i << "\t" << best_distance;
+    //     }
+    // }
+    //
+    // std::ofstream outstream("shortest.tsv");
+    // outstream << best_city;
 
-    std::ofstream outstream("shortest.tsv");
-    outstream << best_city;
+
     return 0;
 }
