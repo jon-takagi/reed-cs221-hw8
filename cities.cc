@@ -37,19 +37,12 @@ Cities::permutation_t Cities::random_permutation(unsigned len)
 {
     //first create the ordered vector
     permutation_t permuted_nums;
-<<<<<<< HEAD
-    for(int i = 0; i < len; i++) {
-        nums.push_back(i);
-    }
-    std::random_shuffle(nums.front, nums.back); 
-=======
     for (unsigned int i = 0; i < len; i++)
     {
         permuted_nums.push_back(i);
     }
     //And then use the shuffle function
     std::random_shuffle(permuted_nums.begin(),permuted_nums.end());
->>>>>>> 8a7a5a32a7c1da61fe6981a4220caa208861d4d3
     return permuted_nums;
 }
 
