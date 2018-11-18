@@ -2,6 +2,7 @@
 #include <cmath>
 #include <vector>
 #include <random>
+#include <algorithm>
 
 //returns the distance between two city coord pairs
 double Cities::dist_between(coord_t city_a, coord_t city_b) const
@@ -14,29 +15,41 @@ Cities Cities::reorder(const permutation_t& ordering) const
 {
     auto permuted_cities = new Cities();
     std::vector<coord_t> permuted_elmts = {};//empty vector
+    //Copy in the reordered elements
     for (int i : ordering)
     {
         permuted_elmts.push_back(this->city_elements_.at(i));//Takes element i of original cities object and puts it in
     }
+    //Then copy any elements that weren't reordered
+    for (int i = permuted_elmts.size(); i < (this->size()); i++)
+    {
+        permuted_elmts.push_back(this->city_elements_.at(i-1));//since i is a size here, we need to scale it back to refer to the elements
+    }
     permuted_cities->city_elements_ = permuted_elmts;
     return *permuted_cities;
 }
+
 //Returns a random permutation of ints 0 to len-1
 //This is implemented by making an ordered vector of said ints
-//Then picking one of those ints at random, removing it from the
-//vector (by swapping it to the last place and then popping it),
-//and then adding it to the back of a new permutation vector.
-//This is repeated until it's done.
-//The ordered vector does then become unordered but we're just
-//pulling out elements at random so the order should be arbitrary anyways.
+//Then using the shuffle function on that vector, and then
+//returning it after the STL has done all the hard work for us.
 Cities::permutation_t Cities::random_permutation(unsigned len)
 {
     //first create the ordered vector
     permutation_t permuted_nums;
+<<<<<<< HEAD
     for(int i = 0; i < len; i++) {
         nums.push_back(i);
     }
     std::random_shuffle(nums.front, nums.back); 
+=======
+    for (unsigned int i = 0; i < len; i++)
+    {
+        permuted_nums.push_back(i);
+    }
+    //And then use the shuffle function
+    std::random_shuffle(permuted_nums.begin(),permuted_nums.end());
+>>>>>>> 8a7a5a32a7c1da61fe6981a4220caa208861d4d3
     return permuted_nums;
 }
 
@@ -51,10 +64,9 @@ double Cities::total_path_distance(const permutation_t& ordering) const
     }
     return distance;
 }
-int Cities::size() {
+int Cities::size() const {
     return this -> city_elements_.size();
 }
-
 
 //reads from the input istream
 //while the stream is not done, make pairs of values
