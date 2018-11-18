@@ -2,6 +2,7 @@
 #include <cmath>
 #include <vector>
 #include <random>
+#include <algorithm>
 
 //returns the distance between two city coord pairs
 double Cities::dist_between(coord_t city_a, coord_t city_b) const
@@ -30,31 +31,18 @@ Cities Cities::reorder(const permutation_t& ordering) const
 
 //Returns a random permutation of ints 0 to len-1
 //This is implemented by making an ordered vector of said ints
-//Then picking one of those ints at random, removing it from the
-//vector (by swapping it to the last place and then popping it),
-//and then adding it to the back of a new permutation vector.
-//This is repeated until it's done.
-//The ordered vector does then become unordered but we're just
-//pulling out elements at random so the order should be arbitrary anyways.
+//Then using the shuffle function on that vector, and then
+//returning it after the STL has done all the hard work for us.
 Cities::permutation_t Cities::random_permutation(unsigned len)
 {
     //first create the ordered vector
-    permutation_t ordered_nums;
+    permutation_t permuted_nums;
     for (unsigned int i = 0; i < len; i++)
     {
-        ordered_nums.push_back(i);
+        permuted_nums.push_back(i);
     }
-    //now establish our RNG
-    std::default_random_engine generator;
-    permutation_t permuted_nums;
-    for (int i = len; i > 0; i--)
-    {
-        std::uniform_int_distribution<unsigned int> distribution(0, len-1);
-        unsigned int holder =  ordered_nums.at(distribution(generator));
-        ordered_nums[distribution(generator)] = ordered_nums.at(ordered_nums.size() - 1);
-        ordered_nums.pop_back();
-        permuted_nums.push_back(holder);
-    }
+    //And then use the shuffle function
+    std::random_shuffle(permuted_nums.begin(),permuted_nums.end());
     return permuted_nums;
 }
 
