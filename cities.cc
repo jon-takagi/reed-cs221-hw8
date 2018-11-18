@@ -47,7 +47,7 @@ Cities::permutation_t Cities::random_permutation(unsigned len)
     //now establish our RNG
     std::default_random_engine generator;
     permutation_t permuted_nums;
-    for (int i = len; i > 0; i++)
+    for (int i = len; i > 0; i--)
     {
         std::uniform_int_distribution<unsigned int> distribution(0, len-1);
         unsigned int holder =  ordered_nums.at(distribution(generator));
