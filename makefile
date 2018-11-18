@@ -3,9 +3,9 @@ CXXFLAGS=-Wall -Wextra -pedantic -Werror -std=c++17 -O0 -g
 LDFLAGS=$(CXXFLAGS)
 OBJ=$(SRC:.cc=.o)
 
-all: test_class
+all: cities_testing
 
-test_class: cities.o
+cities_testing: cities.o cities_testing.o
 	$(CXX) $(LDFLAGS) -o $@ $^
 tsp: tsp.cc cities.cc
 	$(CXX) $(LDFLAGS) -o $@ $^
