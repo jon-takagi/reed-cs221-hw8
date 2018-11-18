@@ -3,11 +3,12 @@
 #include <vector>
 #include <random>
 
-//returns the distance between twot city coord pairs
+//returns the distance between two city coord pairs
 double Cities::dist_between(coord_t city_a, coord_t city_b) const
 {
     return std::hypot(static_cast<double>(city_a.first-city_b.first), static_cast<double>(city_a.second-city_b.second));//Cast as doubles so hypot returns doubles
 }
+
 
 Cities Cities::reorder(const permutation_t& ordering) const
 {
@@ -20,23 +21,10 @@ Cities Cities::reorder(const permutation_t& ordering) const
     permuted_cities->city_elements_ = permuted_elmts;
     return *permuted_cities;
 }
-
-//Returns the total path distance for a given ordering of cities.
-double Cities::total_path_distance(const permutation_t& ordering) const
-{
-    auto city_path = reorder(ordering).city_elements_;
-    double distance = dist_between(city_path.at(0), city_path.at(city_path.size()-1));//Initialize distance as dist between first and last
-    for (unsigned int i = 1; i < city_path.size(); i++)//loop the distance between city i and the city before it, from the second to the last city.
-    {
-        distance += dist_between(city_path.at(i), city_path.at(i-1));
-    }
-    return distance;
-}
-
 //Returns a random permutation of ints 0 to len-1
 //This is implemented by making an ordered vector of said ints
 //Then picking one of those ints at random, removing it from the
-//vector (by swapping it to the last place and then popping it), 
+//vector (by swapping it to the last place and then popping it),
 //and then adding it to the back of a new permutation vector.
 //This is repeated until it's done.
 //The ordered vector does then become unordered but we're just
@@ -53,8 +41,8 @@ Cities::permutation_t Cities::random_permutation(unsigned len)
     std::default_random_engine generator;
     permutation_t permuted_nums;
     for (int i = len; i > 0; i++)
-    {   
-        std::uniform_int_distribution<unsigned int> distribution(0, len-1);     
+    {
+        std::uniform_int_distribution<unsigned int> distribution(0, len-1);
         unsigned int holder =  ordered_nums.at(distribution(generator));
         ordered_nums[distribution(generator)] = ordered_nums.at(ordered_nums.size() - 1);
         ordered_nums.pop_back();
@@ -63,14 +51,40 @@ Cities::permutation_t Cities::random_permutation(unsigned len)
     return permuted_nums;
 }
 
-int main()
+//Returns the total path distance for a given ordering of cities.
+double Cities::total_path_distance(const permutation_t& ordering) const
 {
-    return 0;
+    auto city_path = reorder(ordering).city_elements_;
+    double distance = dist_between(city_path.at(0), city_path.at(city_path.size()-1));//Initialize distance as dist between first and last
+    for (unsigned int i = 1; i < city_path.size(); i++)//loop the distance between city i and the city before it, from the second to the last city.
+    {
+        distance += dist_between(city_path.at(i), city_path.at(i-1));
+    }
+    return distance;
+}
+int Cities::size() {
+    return this -> city_elements_.size();
 }
 
+//reads from the input istream
+//while the stream is not done, make pairs of values
+//relies on in reading a whole number
+//as explained to me by robert
+std::istream& operator >> (std::istream& in, Cities& cities_ls){
+    while(in) {
+        Cities::coord_t pair;
+        in >> pair.first;
+        in >> pair.second;
+        cities_ls.city_elements_.push_back(pair);
+    }
+    return in;
+}
 
-
-
-
-
-
+//writes tab separated list
+//each pair in the elements is written on a newline as tab separated values
+std::ostream& operator << (std::ostream& os, Cities& cities_ls){
+    for(Cities::coord_t elm: cities_ls.city_elements_){
+        os << elm.first << "\t" << elm.second << "\n";
+    }
+    return os;
+}
