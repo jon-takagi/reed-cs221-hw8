@@ -1,5 +1,7 @@
 #include "cities.hh"
 #include <cmath>
+#include <vector>
+#include <random>
 
 //returns the distance between two city coord pairs
 double Cities::dist_between(coord_t city_a, coord_t city_b) const

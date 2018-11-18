@@ -18,10 +18,10 @@ int main(int argc, char** argv) {
 
     Cities best_city({});
     double best_distance = std::numeric_limits<double>::infinity();
-    Cities::permutation_t order = Cities::random_permuation(number_of_cities);
+    Cities::permutation_t order = city.random_permutation(number_of_cities);
 
     for(int i = 0; i < iterations; i++) {
-        order = Cities::random_permuation(number_of_cities);
+        order = city.random_permutation(number_of_cities);
         city = city.reorder(order);
         double dist = city.total_path_distance(order);
         if(dist < best_distance) {
