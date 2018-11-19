@@ -36,5 +36,5 @@ Here we have challenge.gif, which shows the plot of five.tsv, and challenge-big.
 
 ## Results and other notes
 We found that the output at fifty cities to be very unoptimal. A monkey with a marker could likely have done better, but on the other hand, a monkey with a computer could certainly not have done so well, so that's a small comfort.
-To compile everything, just use the make file. There were no know bugs that we noticed in our program, but our RNG for random shuffle is currently not highly random.
+To compile everything, just use the make file. There is currently one bug in our files, which is that the shortest.gif was based off an earlier, incorrect reordering which had the coordinate (0,0) accidentally included. The image has not been updated since, but otherwise reflects an accurate path.
 
