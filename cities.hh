@@ -33,11 +33,14 @@ public:
     double total_path_distance(const permutation_t& ordering) const;
 
     //Returns a random permutation of integers from 0 to len-1
-    permutation_t random_permutation(unsigned len);
+    permutation_t random_permutation(unsigned len) const;
 
     //helper for tsp
     //number of cities in the list
     int size() const;
+    
+    //Helper function that returns the elements of a cities object
+    std::vector<coord_t> get_elements() const;
 
     friend std::istream& operator >> (std::istream& in, Cities& cities_ls);
     friend std::ostream& operator << (std::ostream& os, Cities& cities_ls);

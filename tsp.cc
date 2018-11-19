@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "cities.hh"
+#include <cassert>
 
 // Write a new file called tsp.cc with a main() function that will perform the actual search.
 int main(int argc, char** argv) {
@@ -45,6 +46,6 @@ int main(int argc, char** argv) {
 
     // At the end of the loop, save your city ordering to a file called "shortest.tsv".
     std::ofstream outstream("shortest.tsv");
-    outstream << best_city;
+    outstream << city;
     return 0;
 }

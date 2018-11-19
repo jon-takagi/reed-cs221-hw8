@@ -3,6 +3,8 @@
 #include <vector>
 #include <random>
 #include <algorithm>
+#include <chrono>
+
 
 //returns the distance between two city coord pairs
 double Cities::dist_between(coord_t city_a, coord_t city_b) const
@@ -10,7 +12,10 @@ double Cities::dist_between(coord_t city_a, coord_t city_b) const
     return std::hypot(static_cast<double>(city_a.first-city_b.first), static_cast<double>(city_a.second-city_b.second));//Cast as doubles so hypot returns doubles
 }
 
-
+//This function is given a permutation vector as an argument and returns a
+//new cities object based on that vector, one which is equivalent to the
+//current cities object, with the ordering of elements changed to reflect
+//the permutation vector.
 Cities Cities::reorder(const permutation_t& ordering) const
 {
     auto permuted_cities = new Cities();
@@ -21,7 +26,7 @@ Cities Cities::reorder(const permutation_t& ordering) const
         permuted_elmts.push_back(this->city_elements_.at(i));//Takes element i of original cities object and puts it in
     }
     //Then copy any elements that weren't reordered
-    for (int i = permuted_elmts.size(); i < (this->size()); i++)
+    for (long unsigned int i = permuted_elmts.size(); i < (this->city_elements_.size()); i++)
     {
         permuted_elmts.push_back(this->city_elements_.at(i-1));//since i is a size here, we need to scale it back to refer to the elements
     }
@@ -33,7 +38,7 @@ Cities Cities::reorder(const permutation_t& ordering) const
 //This is implemented by making an ordered vector of said ints
 //Then using the shuffle function on that vector, and then
 //returning it after the STL has done all the hard work for us.
-Cities::permutation_t Cities::random_permutation(unsigned len)
+Cities::permutation_t Cities::random_permutation(unsigned len) const
 {
     //first create the ordered vector
     permutation_t permuted_nums;
@@ -41,8 +46,11 @@ Cities::permutation_t Cities::random_permutation(unsigned len)
     {
         permuted_nums.push_back(i);
     }
+    //Establish our rng; we use a time-based seed
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine rng(seed);
     //And then use the shuffle function
-    std::random_shuffle(permuted_nums.begin(),permuted_nums.end());
+    std::shuffle(permuted_nums.begin(),permuted_nums.end(), rng);
     return permuted_nums;
 }
 
@@ -66,9 +74,10 @@ int Cities::size() const {
 //relies on in reading a whole number
 //as explained to me by robert
 std::istream& operator >> (std::istream& in, Cities& cities_ls){
-    while(in) {
+    int x;
+    while(in >> x) {
         Cities::coord_t pair;
-        in >> pair.first;
+        pair.first = x;
         in >> pair.second;
         cities_ls.city_elements_.push_back(pair);
     }
@@ -83,3 +92,32 @@ std::ostream& operator << (std::ostream& os, Cities& cities_ls){
     }
     return os;
 }
+
+//helper function that returns elements, used for testing
+std::vector<Cities::coord_t> Cities::get_elements() const
+{
+    return this->city_elements_;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
